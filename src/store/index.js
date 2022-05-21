@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import axiosInstance from "../_helpers/axios";
 
 const store = createStore({
     state: {
@@ -6,7 +7,11 @@ const store = createStore({
     },
     getters: {},
     mutations: {},
-    actions: {}
+    actions: {
+        async sign({}, payload) {
+            return await axiosInstance.post('/sign', payload);
+        },
+    }
 })
 
 export default store;

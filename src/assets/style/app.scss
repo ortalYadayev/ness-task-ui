@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: rgb(24, 119, 241);
-  --gray: rgb(239, 241, 244);
-  --secondary-color: rgb(158, 208, 255);
+  --primary-color: rgb(70, 70, 70);
+  --secondary-color: rgb(64, 84, 178);
+  --gray: rgb(245, 245, 245);
 }
+
+* {
+  direction: rtl;
+}
+
 html {
   overflow-x: hidden;
 }

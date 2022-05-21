@@ -3,7 +3,7 @@
 ## Install
 
 ```
-git clone git@github.com:ortalYadayev/task-ness.git
+git clone git@github.com:ortalYadayev/task-ness-ui.git
 cd ui
 npm install
 ```
