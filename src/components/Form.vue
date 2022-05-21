@@ -12,7 +12,7 @@
       <div class="flex flex-col w-full sm:w-1/2 md:w-1/4 mb-2">
         <input
             v-model="payload.institution"
-            @keydown="resetErrors('institution')"
+            @keydown="resetErrors('institution', 'message')"
             name="institution"
             placeholder="מוסד"
             type="text"
@@ -21,10 +21,10 @@
         >
         <transition name="slide-fade">
           <span
-            v-if="v$.institution.$error"
+            v-if="errors.institution || v$.institution.$error"
             class="italic text-xs text-red-500"
           >
-            {{ v$.institution.$errors[0].$message }}
+            {{ errors.institution || v$.institution.$errors[0].$message }}
           </span>
         </transition>
       </div>
@@ -36,20 +36,20 @@
       <div class="flex flex-col sm:flex-row mb-2">
         <div class="flex flex-col sm:w-1/2 mb-2 sm:ml-5">
           <input
-              v-model="payload.id"
-              @keydown="resetErrors('id')"
-              name="id"
+              v-model="payload.id_student"
+              @keydown="resetErrors('id_student', 'message')"
+              name="id_student"
               placeholder="מספר תעודת זהות"
               type="text"
               class="duration-150 border-2 text-black hover:text-secondary-color focus:text-secondary-color rounded-md px-3 py-1.5 mb-2"
-              :class="errors.id || v$.id.$error ? 'border-red-400' : 'border-primary-color hover:border-secondary-color focus:border-secondary-color'"
+              :class="errors.id_student || v$.id_student.$error ? 'border-red-400' : 'border-primary-color hover:border-secondary-color focus:border-secondary-color'"
           >
           <transition name="slide-fade">
             <span
-                v-if="v$.id.$error"
+                v-if="errors.id_student || v$.id_student.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.id.$errors[0].$message }}
+              {{ errors.id_student || v$.id_student.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -59,7 +59,7 @@
             <label class="ml-2" for="birthDate">תאריך לידה</label>
             <input
                 v-model="payload.birthDate"
-                @keydown="resetErrors('birthDate')"
+                @input="resetErrors('birthDate', 'message')"
                 id="birthDate"
                 placeholder="תאריך לידה"
                 type="date"
@@ -69,10 +69,10 @@
           </div>
           <transition name="slide-fade">
             <span
-                v-if="v$.birthDate.$error"
+                v-if="errors.birthDate || v$.birthDate.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.birthDate.$errors[0].$message }}
+              {{ errors.birthDate || v$.birthDate.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -82,7 +82,7 @@
         <div class="flex flex-col sm:w-1/2 mb-2 sm:ml-5">
           <input
               v-model="payload.lastName"
-              @keydown="resetErrors('lastName')"
+              @keydown="resetErrors('lastName', 'message')"
               name="lastName"
               placeholder="שם משפחה"
               type="text"
@@ -91,10 +91,10 @@
           >
           <transition name="slide-fade">
             <span
-                v-if="v$.lastName.$error"
+                v-if="errors.lastName || v$.lastName.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.lastName.$errors[0].$message }}
+              {{ errors.lastName || v$.lastName.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -102,7 +102,7 @@
         <div class="flex flex-col sm:w-1/2 mb-2">
           <input
               v-model="payload.birthCountry"
-              @keydown="resetErrors('birthCountry')"
+              @keydown="resetErrors('birthCountry', 'message')"
               name="birthCountry"
               placeholder="ארץ לידה"
               type="text"
@@ -111,10 +111,10 @@
           >
           <transition name="slide-fade">
             <span
-                v-if="v$.birthCountry.$error"
+                v-if="errors.birthCountry || v$.birthCountry.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.birthCountry.$errors[0].$message }}
+              {{ errors.birthCountry || v$.birthCountry.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -124,7 +124,7 @@
         <div class="flex flex-col sm:w-1/2 mb-2 sm:ml-5">
           <input
               v-model="payload.firstName"
-              @keydown="resetErrors('firstName')"
+              @keydown="resetErrors('firstName', 'message')"
               name="firstName"
               placeholder="שם פרטי"
               type="text"
@@ -133,10 +133,10 @@
           >
           <transition name="slide-fade">
             <span
-                v-if="v$.firstName.$error"
+                v-if="errors.firstName || v$.firstName.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.firstName.$errors[0].$message }}
+              {{ errors.firstName || v$.firstName.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -146,22 +146,12 @@
             <label class="ml-2" for="immigration">תאריך עלייה</label>
             <input
                 v-model="payload.immigration"
-                @keydown="resetErrors('immigration')"
+                @input="resetErrors('immigration', 'message')"
                 id="immigration"
                 type="date"
                 class="flex-1 duration-150 border-2 text-black hover:text-secondary-color focus:text-secondary-color rounded-md px-3 py-1.5"
-                :class="errors.immigration || v$.immigration.$error ? 'border-red-400' : 'border-primary-color hover:border-secondary-color focus:border-secondary-color'"
             >
           </div>
-
-          <transition name="slide-fade">
-            <span
-                v-if="v$.immigration.$error"
-                class="italic text-xs text-red-500"
-            >
-              {{ v$.immigration.$errors[0].$message }}
-            </span>
-          </transition>
         </div>
       </div>
 
@@ -202,7 +192,7 @@
         <div class="flex flex-col sm:w-1/2 mb-2">
           <input
               v-model="payload.nation"
-              @keydown="resetErrors('nation')"
+              @keydown="resetErrors('nation', 'message')"
               name="nation"
               placeholder="לאום"
               type="text"
@@ -211,10 +201,10 @@
           >
           <transition name="slide-fade">
             <span
-                v-if="v$.nation.$error"
+                v-if="errors.nation || v$.nation.$error"
                 class="italic text-xs text-red-500"
             >
-              {{ v$.nation.$errors[0].$message }}
+              {{ errors.nation || v$.nation.$errors[0].$message }}
             </span>
           </transition>
         </div>
@@ -223,7 +213,7 @@
       <div class="flex flex-col mb-2">
         <input
             v-model="payload.homePhone"
-            @keydown="resetErrors('homePhone')"
+            @keydown="resetErrors('homePhone', 'message')"
             name="homePhone"
             placeholder="טלפון בבית"
             type="text"
@@ -232,10 +222,10 @@
         >
         <transition name="slide-fade">
           <span
-              v-if="v$.homePhone.$error"
+              v-if="errors.homePhone || v$.homePhone.$error "
               class="italic text-xs text-red-500"
           >
-            {{ v$.homePhone.$errors[0].$message }}
+            {{ errors.homePhone || v$.homePhone.$errors[0].$message }}
           </span>
         </transition>
       </div>
@@ -243,7 +233,7 @@
       <div class="flex flex-col mb-2">
         <input
             v-model="payload.mobilePhone"
-            @keydown="resetErrors('mobilePhone')"
+            @keydown="resetErrors('mobilePhone', 'message')"
             name="mobilePhone"
             placeholder="טלפון נייד"
             type="text"
@@ -252,10 +242,10 @@
         >
         <transition name="slide-fade">
           <span
-              v-if="v$.mobilePhone.$error"
+              v-if="errors.mobilePhone || v$.mobilePhone.$error"
               class="italic text-xs text-red-500"
           >
-            {{ v$.mobilePhone.$errors[0].$message }}
+            {{ errors.mobilePhone || v$.mobilePhone.$errors[0].$message }}
           </span>
         </transition>
       </div>
@@ -263,7 +253,7 @@
       <div class="flex flex-col mb-2">
         <input
             v-model="payload.email"
-            @keydown="resetErrors('email')"
+            @keydown="resetErrors('email', 'message')"
             name="email"
             placeholder="e-mail"
             type="text"
@@ -272,15 +262,24 @@
         >
         <transition name="slide-fade">
           <span
-              v-if="v$.email.$error"
+              v-if="errors.email || v$.email.$error"
               class="italic text-xs text-red-500"
           >
-            {{ v$.email.$errors[0].$message }}
+            {{ errors.email || v$.email.$errors[0].$message }}
           </span>
         </transition>
       </div>
 
-      <div class="flex items-center justify-center">
+      <transition name="slide-fade">
+          <span
+              v-if="errors.message"
+              class="italic text-xs text-red-500"
+          >
+            {{ errors.message }}
+          </span>
+        </transition>
+
+      <div class="flex items-center justify-center mt-4">
         <button
             class="duration-300 shadow-md rounded-xl text-xl tracking-wide w-full bg-primary-color hover:bg-secondary-color text-gray font-medium py-2"
             type="submit"
@@ -300,9 +299,9 @@ import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, maxLength, helpers } from '@vuelidate/validators'
 const store = useStore();
 
-const payload = reactive({
+let payload = reactive({
   institution: '',
-  id: '',
+  id_student: '',
   birthDate: Date,
   lastName: '',
   birthCountry: '',
@@ -315,9 +314,9 @@ const payload = reactive({
   email: '',
 });
 
-const errors = ref({
+let errors = ref({
   institution: '',
-  id: '',
+  id_student: '',
   birthDate: '',
   firstName: '',
   lastName: '',
@@ -336,7 +335,7 @@ const rules = {
     minLength: helpers.withMessage(({$params}) => `לפחות ${$params.min} תווים!`, minLength(2)),
     maxLength: helpers.withMessage(({$params}) => `מקסימום ${$params.max} תווים!`, maxLength(255)),
   },
-  id: {
+  id_student: {
     required: helpers.withMessage('שדה חובה!', required),
     minLength: helpers.withMessage(({$params}) => `חובה ${$params.min} תווים!`, minLength(9)),
     maxLength: helpers.withMessage(({$params}) => `חובה ${$params.max} תווים!`, maxLength(9)),
@@ -357,9 +356,6 @@ const rules = {
   birthCountry: {
     required: helpers.withMessage('שדה חובה!', required),
   },
-  immigration: {
-    required: helpers.withMessage('שדה חובה!', required),
-  },
   gender: {
     required: helpers.withMessage('שדה חובה!', required),
   },
@@ -370,8 +366,8 @@ const rules = {
   },
   homePhone: {
     required: helpers.withMessage('שדה חובה!', required),
-    minLength: helpers.withMessage(({$params}) => `לפחות ${$params.min} תווים!`, minLength(10)),
-    maxLength: helpers.withMessage(({$params}) => `מקסימום ${$params.max} תווים!`, maxLength(10)),
+    minLength: helpers.withMessage(({$params}) => `לפחות ${$params.min} תווים!`, minLength(9)),
+    maxLength: helpers.withMessage(({$params}) => `מקסימום ${$params.max} תווים!`, maxLength(9)),
   },
   mobilePhone: {
     required: helpers.withMessage('שדה חובה!', required),
@@ -393,21 +389,45 @@ async function onSubmit() {
     return;
   }
 
-  console.log('3')
-
   try {
     await store.dispatch('sign', payload);
+
+    // payload.id_student = '';
+    // payload.institution = '';
+    // payload.id_student = '';
+    // payload.birthDate = null;
+    // payload.lastName = '';
+    // payload.birthCountry = '';
+    // payload.firstName = '';
+    // payload.immigration = null;
+    // payload.gender = '';
+    // payload.nation = '';
+    // payload.homePhone = '';
+    // payload.mobilePhone = '';
+    // payload.email = '';
+
+    payload = {};
+
+    // errors.value = null;
   } catch (error) {
+    if (error.response.status === 400) {
+      error.response.data.errors.map(error => {
+        if(!errors.value[error.param]){
+          errors.value[error.param] = error.msg;
+        }
+      })
+    }
     if (error.response.status === 422) {
-      // errors.value.message = error.response.data.message;
+      errors.value.message = error.response.data.message;
     }
   }
 }
 
 
-function resetErrors(key) {
+function resetErrors(key, message) {
   v$.value[key].$reset();
   delete errors.value[key];
+  delete errors.value[message];
 }
 </script>
 

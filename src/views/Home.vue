@@ -9,7 +9,7 @@
 
       <Form v-if="open" />
 
-      <Table />
+      <Table :students="studentss" />
     </div>
 </template>
 
@@ -17,18 +17,33 @@
 import Form from '../components/Form.vue';
 import Table from '../components/Table.vue';
 import { ref } from "vue";
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const students = ref([])
 
 const open = ref(false);
 const titleButton = ref('לרשום תלמיד');
 
-function openForm() {
-  open.value = !open.value;
+getStudents();
 
+async function getStudents() {
+  const response = await store.dispatch('getStudents');
+  students.value = response.data;
+}
+
+function openForm() {
   if(open.value) {
-    titleButton.value = 'ביטול רישום';
-    console.log(titleButton.value)
-  } else {
+    if(!confirm('האם אתה בטוח?')) {
+      return;
+    }
+
     titleButton.value = 'לרשום תלמיד';
+  } else {
+    titleButton.value = 'ביטול רישום';
   }
+
+  open.value = !open.value;
 }
 </script>

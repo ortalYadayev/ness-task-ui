@@ -11,7 +11,10 @@ const store = createStore({
         async sign({}, payload) {
             return await axiosInstance.post('/sign', payload);
         },
-    }
+        async getStudents() {
+            return await axiosInstance.get('/students');
+        },
+    },
 })
 
 export default store;
