@@ -9,24 +9,34 @@
        טופס רישום תלמיד לשנה״ל תשפ״ב 2022
       </h1>
 
-      <div class="flex flex-col w-full sm:w-1/2 md:w-1/4 mb-2">
-        <input
-            v-model="payload.institution"
-            @keydown="resetErrors('institution', 'message')"
-            name="institution"
-            placeholder="מוסד"
-            type="text"
-            class="duration-150 border-2 text-black hover:text-secondary-color focus:text-secondary-color rounded-md px-3 py-1.5 mb-2"
-            :class="errors.institution || v$.institution.$error ? 'border-red-400' : 'border-primary-color hover:border-secondary-color focus:border-secondary-color'"
-        >
-        <transition name="slide-fade">
+      <div class="flex flex-col sm:flex-row mb-2">
+        <div class="flex flex-col w-full sm:w-1/2 md:w-1/4 mb-2 sm:ml-5">
+          <input
+              v-model="payload.institution"
+              @keydown="resetErrors('institution', 'message')"
+              name="institution"
+              placeholder="מוסד"
+              type="text"
+              class="duration-150 border-2 text-black hover:text-secondary-color focus:text-secondary-color rounded-md px-3 py-1.5 mb-2"
+              :class="errors.institution || v$.institution.$error ? 'border-red-400' : 'border-primary-color hover:border-secondary-color focus:border-secondary-color'"
+          >
+          <transition name="slide-fade">
           <span
-            v-if="errors.institution || v$.institution.$error"
-            class="italic text-xs text-red-500"
+              v-if="errors.institution || v$.institution.$error"
+              class="italic text-xs text-red-500"
           >
             {{ errors.institution || v$.institution.$errors[0].$message }}
           </span>
-        </transition>
+          </transition>
+        </div>
+
+        <div class="flex flex-col sm:w-1/2 md:w-3/4 mb-2">
+          <div class="flex items-center">
+            <button @click="prevInstitution" class="flex-1 duration-150 border-2  border-secondary-color text-secondary-color hover:bg-secondary-color hover:text-gray rounded-md px-3 py-1.5">
+              אוטומטי לפי הבחירה מהמסך הקודם
+            </button>
+          </div>
+        </div>
       </div>
 
       <h2 class="sm:text-lg mb-2">
@@ -404,6 +414,9 @@ async function onSubmit() {
   }
 }
 
+function prevInstitution() {
+  payload.institution = store.state.prevInstitution;
+}
 
 function resetErrors(key, message) {
   v$.value[key].$reset();
