@@ -1,6 +1,5 @@
 <template>
   <div class="full-size-table rounded-lg sm:shadow-lg overflow-scroll mt-10 mx-4 lg:mx-10">
-<!--    <table class="unresponsive-table w-full flex bg-white shadow-lg overflow-hidden text-center">-->
     <table class="unresponsive-table w-full bg-white overflow-hidden shadow-lg text-center">
       <thead class="text-white">
         <tr class="bg-secondary-color table-row rounded-l-lg sm:rounded-none">
@@ -88,12 +87,27 @@
 </template>
 
 <script setup>
+// import { ref } from "vue";
+import { useStore } from 'vuex';
+
+// const store = useStore();
+// const students = ref([]);
+
+// setTimeout(() =>
+//     getStudents()
+        // , 0);
+
+// async function getStudents() {
+//   const response = await store.dispatch('getStudents');
+//   students.value = response.data;
+// }
 const props = defineProps({
   students: {
     required: false,
     type: [Array, null],
   }
 });
+// console.log(students)
 </script>
 
 <style lang="scss" scoped>

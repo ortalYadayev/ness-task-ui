@@ -14,6 +14,9 @@ const store = createStore({
         async getStudents() {
             return await axiosInstance.get('/students');
         },
+        async getLastStudent() {
+            return await axiosInstance.get('/get-student');
+        },
     },
 })
 

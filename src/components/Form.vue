@@ -146,7 +146,6 @@
             <label class="ml-2" for="immigration">תאריך עלייה</label>
             <input
                 v-model="payload.immigration"
-                @input="resetErrors('immigration', 'message')"
                 id="immigration"
                 type="date"
                 class="flex-1 duration-150 border-2 text-black hover:text-secondary-color focus:text-secondary-color rounded-md px-3 py-1.5"
@@ -297,9 +296,9 @@ import { useStore } from 'vuex';
 import { reactive, ref } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, maxLength, helpers } from '@vuelidate/validators'
-const store = useStore();
 
-let payload = reactive({
+const store = useStore();
+const payload = reactive({
   institution: '',
   id_student: '',
   birthDate: Date,
@@ -313,7 +312,7 @@ let payload = reactive({
   mobilePhone: '',
   email: '',
 });
-
+let emit = defineEmits(['onSubmit', 'update:id_student']);
 let errors = ref({
   institution: '',
   id_student: '',
@@ -328,7 +327,6 @@ let errors = ref({
   mobilePhone: '',
   email: '',
 });
-
 const rules = {
   institution: {
     required: helpers.withMessage('שדה חובה!', required),
@@ -379,7 +377,6 @@ const rules = {
     email: helpers.withMessage('כתובת מייל שגוי או לא נכון, נסה שנית.', email),
   },
 };
-
 const v$ = useVuelidate(rules, payload);
 
 async function onSubmit() {
@@ -392,23 +389,7 @@ async function onSubmit() {
   try {
     await store.dispatch('sign', payload);
 
-    // payload.id_student = '';
-    // payload.institution = '';
-    // payload.id_student = '';
-    // payload.birthDate = null;
-    // payload.lastName = '';
-    // payload.birthCountry = '';
-    // payload.firstName = '';
-    // payload.immigration = null;
-    // payload.gender = '';
-    // payload.nation = '';
-    // payload.homePhone = '';
-    // payload.mobilePhone = '';
-    // payload.email = '';
-
-    payload = {};
-
-    // errors.value = null;
+    emit('onSubmit');
   } catch (error) {
     if (error.response.status === 400) {
       error.response.data.errors.map(error => {
